@@ -1,84 +1,86 @@
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+
 function TopicList({ topics, onBack }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-4 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-10 left-20 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-32 right-16 w-80 h-80 bg-purple-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/4 right-1/3 w-56 h-56 bg-pink-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s'}}></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-4 relative overflow-hidden">
+      {/* Subtle geometric background */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+        <div className="absolute top-20 right-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-8 mb-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="flex items-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl mr-6 flex items-center justify-center shadow-2xl transform hover:rotate-12 transition-transform duration-300">
-                <span className="text-white text-2xl">📋</span>
-              </div>
-              <div>
-                <h1 className="text-5xl font-black bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
-                  トピック一覧
-                </h1>
-                <p className="text-white/70 text-lg font-medium">全{topics.length}個の会話スターター</p>
-              </div>
+        {/* Modern header */}
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-12">
+          <div className="flex items-center mb-6 sm:mb-0">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl mr-4 shadow-lg">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
             </div>
-            <button
-              onClick={onBack}
-              className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-2xl flex items-center"
-            >
-              <span className="mr-3 text-xl">←</span>
-              戻る
-            </button>
+            <div>
+              <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-1">
+                トピック一覧
+              </h1>
+              <p className="text-slate-600 dark:text-slate-300 text-lg">全{topics.length}個の会話スターター</p>
+            </div>
           </div>
+          <Button
+            onClick={onBack}
+            variant="outline"
+            className="border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 h-auto"
+          >
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>戻る</span>
+            </div>
+          </Button>
         </div>
         
-        {/* Topics grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Modern topics grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {topics.map((topic, index) => (
-            <div
+            <Card
               key={index}
-              className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 group relative overflow-hidden shadow-xl"
+              className="bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-              <div className="relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <CardContent className="p-6 relative z-10">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-purple-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white font-bold text-sm">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white font-bold text-xs">
                       {index + 1}
                     </span>
                   </div>
                   <div className="flex-1">
-                    <p className="text-white text-base leading-relaxed font-medium group-hover:text-white/90 transition-colors duration-200">
+                    <p className="text-slate-900 dark:text-white text-base leading-relaxed font-medium group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors duration-200">
                       {topic}
                     </p>
                   </div>
                 </div>
-              </div>
+              </CardContent>
               
-              {/* Decorative corner element */}
-              <div className="absolute top-2 right-2 w-3 h-3 bg-gradient-to-br from-cyan-400 to-purple-400 rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
+              {/* Subtle accent line */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+            </Card>
           ))}
         </div>
         
-        {/* Footer */}
-        <div className="mt-12 text-center">
-          <div className="inline-flex items-center bg-white/10 backdrop-blur-xl border border-white/20 px-8 py-4 rounded-2xl shadow-xl">
-            <span className="text-3xl mr-4">✨</span>
-            <p className="text-white font-bold text-lg">
-              全{topics.length}個のトピックをご用意しました
+        {/* Modern footer */}
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <p className="text-slate-700 dark:text-slate-300 font-medium">
+              全{topics.length}個のトピックを収録中
             </p>
           </div>
         </div>
       </div>
-      
-      {/* Floating elements */}
-      <div className="absolute top-20 left-10 text-white/20 text-3xl animate-bounce" style={{animationDelay: '0.5s'}}>💬</div>
-      <div className="absolute top-40 right-20 text-white/20 text-2xl animate-bounce" style={{animationDelay: '1.5s'}}>🎯</div>
-      <div className="absolute bottom-40 left-16 text-white/20 text-3xl animate-bounce" style={{animationDelay: '2.5s'}}>🌟</div>
-      <div className="absolute bottom-20 right-32 text-white/20 text-2xl animate-bounce" style={{animationDelay: '3.5s'}}>💡</div>
     </div>
   )
 }

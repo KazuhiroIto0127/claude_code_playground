@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import TopicList from './TopicList'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 
 function App() {
   const [selectedTopic, setSelectedTopic] = useState(null)
   const [showTopicList, setShowTopicList] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
 
   const topics = [
     "今日の天気はどうですか？",
@@ -59,8 +63,13 @@ function App() {
   ]
 
   const getRandomTopic = () => {
-    const randomIndex = Math.floor(Math.random() * topics.length)
-    setSelectedTopic(topics[randomIndex])
+    setIsGenerating(true)
+    // Add a small delay for better UX
+    setTimeout(() => {
+      const randomIndex = Math.floor(Math.random() * topics.length)
+      setSelectedTopic(topics[randomIndex])
+      setIsGenerating(false)
+    }, 500)
   }
 
   if (showTopicList) {
@@ -73,84 +82,102 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex flex-col justify-center p-4 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex flex-col justify-center p-4 relative overflow-hidden">
+      {/* Subtle geometric background */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+        <div className="absolute top-20 right-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
       </div>
       
       {/* Main content */}
-      <div className="relative z-10 max-w-2xl w-full mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="relative inline-block">
-            <div className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-2xl transform hover:rotate-6 transition-transform duration-300">
-              <span className="text-white text-3xl">💭</span>
-            </div>
-            <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-ping"></div>
+      <div className="relative z-10 max-w-4xl w-full mx-auto">
+        {/* Modern header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-8 shadow-lg">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
           </div>
-          <h1 className="text-6xl font-black bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 tracking-tight">
-            雑談トピック
+          <h1 className="text-5xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+            雑談トピックジェネレーター
           </h1>
-          <h2 className="text-3xl font-bold text-white/90 mb-4">
-            ジェネレーター
-          </h2>
-          <p className="text-white/70 text-lg">会話のきっかけを見つけよう</p>
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+            会話のきっかけを見つけて、コミュニケーションを豊かにしましょう
+          </p>
         </div>
         
         {/* Topic display */}
-        <div className="mb-10">
+        <div className="mb-12">
           {selectedTopic ? (
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-3xl shadow-2xl transform transition-all duration-500 hover:scale-105 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="bg-gradient-to-r from-cyan-400 to-purple-400 text-transparent bg-clip-text font-bold text-sm uppercase tracking-widest">
-                    ✨ Today's Topic ✨
-                  </div>
+            <Card className="bg-white dark:bg-slate-800 border-0 shadow-xl transform transition-all duration-500 hover:scale-[1.02] relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5"></div>
+              <CardHeader className="relative z-10 pb-4">
+                <div className="flex items-center justify-center">
+                  <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 px-4 py-1">
+                    💡 今日のトピック
+                  </Badge>
                 </div>
-                <p className="text-white text-xl font-medium leading-relaxed text-center">{selectedTopic}</p>
-              </div>
-            </div>
+              </CardHeader>
+              <CardContent className="relative z-10 pt-0">
+                <blockquote className="text-slate-900 dark:text-white text-2xl font-medium leading-relaxed text-center border-l-4 border-blue-500 pl-6 italic">
+                  {selectedTopic}
+                </blockquote>
+              </CardContent>
+            </Card>
           ) : (
-            <div className="bg-white/5 backdrop-blur-xl border-2 border-dashed border-white/30 p-12 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
-              <div className="text-8xl mb-6 animate-bounce">🎲</div>
-              <p className="text-white/80 text-xl font-medium">ボタンを押して話題を選んでください</p>
-            </div>
+            <Card className="bg-white/50 dark:bg-slate-800/50 border-2 border-dashed border-slate-300 dark:border-slate-600 text-center backdrop-blur-sm">
+              <CardContent className="p-16">
+                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                  </svg>
+                </div>
+                <p className="text-slate-600 dark:text-slate-300 text-xl font-medium">ボタンを押して新しい話題を見つけましょう</p>
+              </CardContent>
+            </Card>
           )}
         </div>
         
-        {/* Buttons */}
-        <div className="space-y-4">
-          <button
+        {/* Action buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+          <Button
             onClick={getRandomTopic}
-            className="w-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-400 hover:via-purple-400 hover:to-pink-400 text-white font-bold py-6 px-8 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 relative overflow-hidden group"
+            disabled={isGenerating}
+            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-blue-400 disabled:to-purple-400 text-white font-semibold py-4 px-8 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 disabled:scale-100 disabled:translate-y-0 h-auto group"
           >
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-            <span className="relative z-10 flex items-center justify-center text-xl">
-              <span className="mr-3 text-2xl">🎯</span>
-              話題を選ぶ
-            </span>
-          </button>
+            <div className="flex items-center justify-center gap-3">
+              <svg className={`w-5 h-5 ${isGenerating ? 'animate-spin' : 'group-hover:animate-spin'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span className="text-lg">{isGenerating ? '生成中...' : '新しい話題を選ぶ'}</span>
+            </div>
+          </Button>
           
-          <button
+          <Button
             onClick={() => setShowTopicList(true)}
-            className="w-full bg-white/10 backdrop-blur-xl border border-white/30 hover:bg-white/20 text-white font-bold py-5 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+            variant="outline"
+            className="flex-1 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 h-auto"
           >
-            <span className="flex items-center justify-center text-lg">
-              <span className="mr-3 text-xl">📋</span>
-              トピック一覧を見る
-            </span>
-          </button>
+            <div className="flex items-center justify-center gap-3">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <span className="text-lg">全てのトピックを見る</span>
+            </div>
+          </Button>
+        </div>
+        
+        {/* Stats section */}
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center gap-4 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-slate-700 dark:text-slate-300 font-medium">全{topics.length}個のトピックを収録</span>
+            </div>
+          </div>
         </div>
       </div>
-      
-      {/* Floating elements */}
-      <div className="absolute top-10 left-10 text-white/20 text-4xl animate-bounce" style={{animationDelay: '0.5s'}}>💡</div>
-      <div className="absolute top-20 right-20 text-white/20 text-3xl animate-bounce" style={{animationDelay: '1.5s'}}>🗣️</div>
-      <div className="absolute bottom-20 left-20 text-white/20 text-3xl animate-bounce" style={{animationDelay: '2.5s'}}>🎉</div>
     </div>
   )
 }
